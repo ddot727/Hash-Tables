@@ -9,13 +9,13 @@ class array:
 
 
 # Double the size of the given array
-def resize_array(array, element):
+def resize_array(array):
     new_capacity = array.capacity * 2
     new_elements = [None] * new_capacity
 
     # Copy over elements
     for i in range(array.count):
-        new_elements[i] = array.element[i]
+        new_elements[i] = array.elements[i]
 
     array.elements = new_elements
     array.capacity = new_capacity
@@ -40,7 +40,7 @@ def array_insert(array, element, index):
 
     # Resize the array if the number of elements is over capacity
     if array.capacity <= array.count:
-        resize_array(array, element)
+        resize_array(array)
 
     # Move the elements to create a space at 'index'
     # Think about where to start!
@@ -80,10 +80,22 @@ def array_remove(array, element):
 
 # Remove the element in a given position and return it
 # Then shift every element after that occurrance to fill the gap
-def array_pop():
+def array_pop(array, index):
     # Throw an error if array is out of the current count
-    # Your code here
-    pass
+    # TODO: ,ake a function to better handle errors
+    if index >= array.count:
+        print("Error out of bound in array_pop bruh")
+        return None
+
+    return_value = array.elements[index]
+
+    for i in range(index + 1, array.count, 1):
+        array.elemnts[i - 1] = array.elements[i]
+
+    array.count -= 1
+    array.elements[array.count] = None
+
+    return
 
 
 # Utility to print an array
@@ -102,9 +114,9 @@ def array_print(array):
 arr = array(1)
 
 array_insert(arr, "STRING1", 0)
-# array_print(arr)
-# array_pop(arr, 0)
-# array_print(arr)
+array_print(arr)
+array_pop(arr, 0)
+array_print(arr)
 array_insert(arr, "STRING1", 0)
 array_append(arr, "STRING4")
 array_remove(arr, "STRING1")
